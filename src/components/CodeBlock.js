@@ -50,9 +50,7 @@ function CodeBlock({ codeBlocks }) {
     };
     //socket.current = io("http://localhost:3001");
     //socket.current = io(window.location.hostname);
-    socket.current = io(
-      "https://64adda0cdd1bf10008743dec--resplendent-biscuit-eaed17.netlify.app"
-    );
+    socket.current = io("https://moveo-yuval.netlify.app");
     // For non-students: Receive updates
     if (!isStudent) {
       socket.current.on("codeUpdate", (updatedCodeBlock) => {
