@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 function Lobby({ codeBlocks }) {
   const handleClick = () => {
     fetch(
-      "http://localhost:3001/api/reset",
-      //"https://moveo-code-app.railway.app/api/reset",
+      //"http://localhost:3001/api/reset",
+      "https://moveo-code-app-server-081d43b8aa05.herokuapp.com/api/reset",
       {
         method: "PUT",
         headers: {

@@ -7,7 +7,10 @@ function App() {
   const [codeBlocks, setCodeBlocks] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/codeblocks")
+    fetch(
+      //"http://localhost:3001/api/codeblocks"
+      "https://moveo-code-app-server-081d43b8aa05.herokuapp.com/api/codeblocks"
+    )
       .then((response) => response.json())
       .then((data) => {
         setCodeBlocks(data);
