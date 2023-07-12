@@ -25,10 +25,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Lobby codeBlocks={codeBlocks} />} />
-        <Route
-          path="/code/:id"
-          element={<CodeBlock codeBlocks={codeBlocks} />}
-        />
+        <Route path="/code/:id" element={<CodeBlock />} />
       </Routes>
     </Router>
   );

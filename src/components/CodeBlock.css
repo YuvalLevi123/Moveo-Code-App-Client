@@ -36,3 +36,12 @@
   color: #757575; /* Lighter text color for disabled textarea */
   background-color: #e9ecef; /* Lighter background color for disabled textarea */
 }
+.solved-message {
+  font-size: 50px;
+}
+.ace-editor-wrapper {
+  height: 400px;
+  width: 700px;
+  border-radius: 5px;
+  padding: 1rem;
+}

@@ -2,12 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import "./CodeBlock.css";
-
-function CodeBlock({ codeBlocks }) {
+import AceEditor from "react-ace";
+import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/theme-github";
+function CodeBlock() {
   const { id } = useParams();
-  const [codeBlock, setCodeBlock] = useState(
-    codeBlocks.find((block) => block.id === id)
-  );
+  const [codeBlock, setCodeBlock] = useState({});
+  const [isSolved, setIsSolved] = useState(false);
   const socket = useRef();
   const [isStudent, setIsStudent] = useState(false);
   //const isStudent = codeBlock.currentVisitors > 0 ? true : false;
@@ -44,13 +45,23 @@ function CodeBlock({ codeBlocks }) {
     socket.current = io(`${process.env.REACT_APP_SERVER_URL}`);
 
     // For non-students: Receive updates
-    if (!isStudent) {
-      socket.current.on("codeUpdate", (updatedCodeBlock) => {
-        if (updatedCodeBlock.id === id) {
-          setCodeBlock(updatedCodeBlock);
+    // if (!isStudent) {
+    //   socket.current.on("codeUpdate", (updatedCodeBlock) => {
+    //     if (updatedCodeBlock.id === id) {
+    //       setCodeBlock(updatedCodeBlock);
+    //     }
+    //   });
+    // }
+    socket.current.on("codeUpdate", (updatedCodeBlock) => {
+      if (updatedCodeBlock.id === id) {
+        setCodeBlock(updatedCodeBlock);
+        if (updatedCodeBlock.code === updatedCodeBlock.solution) {
+          setIsSolved(true);
+        } else {
+          setIsSolved(false);
         }
-      });
-    }
+      }
+    });
     fetchData();
     return () => {
       socket.current.disconnect();
@@ -61,24 +72,50 @@ function CodeBlock({ codeBlocks }) {
     const updatedCodeBlock = { ...codeBlock, code: updatedCode };
     setCodeBlock(updatedCodeBlock);
 
+    if (updatedCode === codeBlock.solution) {
+      setIsSolved(true);
+    } else {
+      setIsSolved(false);
+    }
     // For students: Send updates
     if (isStudent) {
       socket.current.emit("codeUpdate", updatedCodeBlock);
     }
   };
-
+  // options and props for AceEditor
+  const editorOptions = {
+    mode: "javascript",
+    theme: "github",
+    onChange: handleCodeChange,
+    value: codeBlock.code || "",
+    name: "UNIQUE_ID_OF_DIV",
+    editorProps: { $blockScrolling: true },
+    setOptions: { useWorker: false },
+    readOnly: !isStudent,
+  };
   return (
     <div className="code-block-container">
       <div className="code-block">
+        {isSolved && (
+          <div className="code-block-title solved-message">
+            Perfect Solution😊
+          </div>
+        )}
         <h1 className="code-block-title">{codeBlock.title}</h1>
-        <textarea
+        {/* <textarea
           value={codeBlock.code || ""}
           onChange={(e) => handleCodeChange(e.target.value)}
           disabled={!isStudent}
           className={`code-block-textarea ${
             !isStudent ? "textarea-disabled" : ""
           }`}
-        ></textarea>
+        ></textarea> */}
+        <div className="ace-editor-wrapper">
+          <AceEditor
+            style={{ height: "100%", width: "100%" }} // To fill the wrapping div
+            {...editorOptions} // Spread the editorOptions object
+          />
+        </div>
       </div>
     </div>
   );
