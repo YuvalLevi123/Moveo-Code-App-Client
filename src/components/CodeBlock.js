@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
+import "./CodeBlock.css";
 // let backend;
 // if (window.location.hostname === "localhost") {
 //   backend = "http://localhost:3001";
@@ -78,14 +79,18 @@ function CodeBlock({ codeBlocks }) {
   };
 
   return (
-    <div>
-      <h1>{codeBlock.title}</h1>
-      <textarea
-        value={codeBlock.code || ""}
-        onChange={(e) => handleCodeChange(e.target.value)}
-        disabled={!isStudent}
-        style={{ height: "300px", width: "700px" }}
-      ></textarea>
+    <div className="code-block-container">
+      <div className="code-block">
+        <h1 className="code-block-title">{codeBlock.title}</h1>
+        <textarea
+          value={codeBlock.code || ""}
+          onChange={(e) => handleCodeChange(e.target.value)}
+          disabled={!isStudent}
+          className={`code-block-textarea ${
+            !isStudent ? "textarea-disabled" : ""
+          }`}
+        ></textarea>
+      </div>
     </div>
   );
 }

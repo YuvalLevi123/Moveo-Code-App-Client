@@ -1,0 +1,38 @@
+/* CodeBlock.css */
+
+.code-block-container {
+  height: 100vh;
+  background: linear-gradient(to bottom right, #0b666a, #35a29f);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.code-block {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  color: #f8f9fa;
+}
+
+.code-block-title {
+  font-family: "Raleway";
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #212529;
+}
+
+.code-block-textarea {
+  height: 510px;
+  width: 700px;
+  color: #212529;
+  background-color: #f8f9fa;
+  border: none;
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+.textarea-disabled {
+  color: #757575; /* Lighter text color for disabled textarea */
+  background-color: #e9ecef; /* Lighter background color for disabled textarea */
+}

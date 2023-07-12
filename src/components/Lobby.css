@@ -1,0 +1,32 @@
+/* Lobby.css */
+
+.d-flex {
+  height: 100vh;
+  background: linear-gradient(to bottom right, #0b666a, #35a29f);
+}
+
+.mb-4 {
+  margin-bottom: 1rem !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem !important;
+}
+
+.text-light {
+  color: #f8f9fa !important;
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+.title {
+  font-family: "Raleway";
+  font-size: 3rem;
+}
