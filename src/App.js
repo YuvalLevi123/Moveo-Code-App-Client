@@ -9,7 +9,7 @@ function App() {
   useEffect(() => {
     fetch(
       //"http://localhost:3001/api/codeblocks"
-      "https://moveo-code-app-server-081d43b8aa05.herokuapp.com/api/codeblocks"
+      `${process.env.REACT_APP_SERVER_URL}/api/codeblocks`
     )
       .then((response) => response.json())
       .then((data) => {

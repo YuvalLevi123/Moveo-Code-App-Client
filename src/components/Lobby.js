@@ -2,9 +2,6 @@ import { React, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Alert from "react-bootstrap/Alert";
 import "./Lobby.css";
 
@@ -14,7 +11,7 @@ function Lobby({ codeBlocks }) {
   const handleClick = () => {
     fetch(
       //"http://localhost:3001/api/reset",
-      "https://moveo-code-app-server-081d43b8aa05.herokuapp.com/api/reset",
+      `${process.env.REACT_APP_SERVER_URL}/api/reset`,
       {
         method: "PUT",
         headers: {
@@ -72,10 +69,3 @@ function Lobby({ codeBlocks }) {
 }
 
 export default Lobby;
-
-// {
-//   /* <div class="d-grid gap-2">
-// <button class="btn btn-lg btn-primary" type="button">Block button</button>
-// <button class="btn btn-lg btn-primary" type="button">Block button</button>
-// </div> */
-// }

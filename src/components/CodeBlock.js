@@ -2,12 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import "./CodeBlock.css";
-// let backend;
-// if (window.location.hostname === "localhost") {
-//   backend = "http://localhost:3001";
-// } else {
-//   backend = window.location.hostname;
-// }
 
 function CodeBlock({ codeBlocks }) {
   const { id } = useParams();
@@ -23,18 +17,15 @@ function CodeBlock({ codeBlocks }) {
       try {
         const response = await fetch(
           // `http://localhost:3001/api/codeblocks/${id}`
-          `https://moveo-code-app-server-081d43b8aa05.herokuapp.com/api/codeblocks/${id}`
+          `${process.env.REACT_APP_SERVER_URL}/api/codeblocks/${id}`
         );
-        // const response = await fetch(
-        //   `https://moveo-code-app.railway.app/api/codeblocks/${id}`
-        // );
         const data = await response.json();
         setCodeBlock(data);
         setIsStudent(data.currentVisitors > 0);
         const updatedData = { ...codeBlock, currentVisitors: 1 };
         const putResponse = await fetch(
           // `http://localhost:3001/api/codeblocks/${id}`,
-          `https://moveo-code-app-server-081d43b8aa05.herokuapp.com/api/codeblocks/${id}`,
+          `${process.env.REACT_APP_SERVER_URL}/api/codeblocks/${id}`,
           {
             method: "PUT",
             headers: {
@@ -50,10 +41,8 @@ function CodeBlock({ codeBlocks }) {
       }
     };
     //socket.current = io("http://localhost:3001");
-    //socket.current = io(window.location.hostname);
-    socket.current = io(
-      "https://moveo-code-app-server-081d43b8aa05.herokuapp.com/"
-    );
+    socket.current = io(`${process.env.REACT_APP_SERVER_URL}`);
+
     // For non-students: Receive updates
     if (!isStudent) {
       socket.current.on("codeUpdate", (updatedCodeBlock) => {
