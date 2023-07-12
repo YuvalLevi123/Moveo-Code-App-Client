@@ -45,3 +45,14 @@
   border-radius: 5px;
   padding: 1rem;
 }
+.user-role {
+  font-family: "Raleway";
+  color: #212529;
+}
+.bold-text {
+  font-weight: bold;
+}
+.ace-editor-disabled .ace_content {
+  background-color: #d3d3d3 !important; /* Color for disabled background */
+  color: #808080 !important; /* Color for disabled text */
+}

@@ -112,9 +112,16 @@ function CodeBlock() {
         ></textarea> */}
         <div className="ace-editor-wrapper">
           <AceEditor
-            style={{ height: "100%", width: "100%" }} // To fill the wrapping div
-            {...editorOptions} // Spread the editorOptions object
+            style={{ height: "100%", width: "100%" }}
+            className={!isStudent ? "ace-editor-disabled" : ""}
+            {...editorOptions}
           />
+        </div>
+        <div className="user-role">
+          You are currently viewing as:
+          <span className="bold-text">
+            {isStudent ? "Student (edit mode)" : "Mentor (read only mode)"}
+          </span>
         </div>
       </div>
     </div>
