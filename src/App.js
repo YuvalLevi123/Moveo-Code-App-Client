@@ -2,16 +2,12 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CodeBlock from "./components/CodeBlock.js";
 import Lobby from "./components/Lobby.js";
-
+import { getAllCodeBlocks } from "./api/codeBlocksAPI";
 function App() {
   const [codeBlocks, setCodeBlocks] = useState([]);
 
   useEffect(() => {
-    fetch(
-      //"http://localhost:3001/api/codeblocks"
-      `${process.env.REACT_APP_SERVER_URL}/api/codeblocks`
-    )
-      .then((response) => response.json())
+    getAllCodeBlocks()
       .then((data) => {
         setCodeBlocks(data);
       })

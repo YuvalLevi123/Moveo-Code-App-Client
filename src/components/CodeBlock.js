@@ -5,6 +5,8 @@ import "./CodeBlock.css";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-github";
+import { getCodeBlockById, updateCodeBlockById } from "../api/codeBlocksAPI";
+
 function CodeBlock() {
   const { id } = useParams();
   const [codeBlock, setCodeBlock] = useState({});
@@ -16,42 +18,20 @@ function CodeBlock() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          // `http://localhost:3001/api/codeblocks/${id}`
-          `${process.env.REACT_APP_SERVER_URL}/api/codeblocks/${id}`
-        );
-        const data = await response.json();
+        // Using getCodeBlockById to fetch the code block by ID
+        const data = await getCodeBlockById(id);
         setCodeBlock(data);
         setIsStudent(data.currentVisitors > 0);
         const updatedData = { ...codeBlock, currentVisitors: 1 };
-        const putResponse = await fetch(
-          // `http://localhost:3001/api/codeblocks/${id}`,
-          `${process.env.REACT_APP_SERVER_URL}/api/codeblocks/${id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(updatedData),
-          }
-        );
-        const updatedBlock = await putResponse.json();
+        // Using updateCodeBlockById to update the code block by ID
+        const updatedBlock = await updateCodeBlockById(id, updatedData);
         console.log("Data updated successfully:", updatedBlock);
       } catch (error) {
         console.error("Error:", error);
       }
     };
-    //socket.current = io("http://localhost:3001");
-    socket.current = io(`${process.env.REACT_APP_SERVER_URL}`);
 
-    // For non-students: Receive updates
-    // if (!isStudent) {
-    //   socket.current.on("codeUpdate", (updatedCodeBlock) => {
-    //     if (updatedCodeBlock.id === id) {
-    //       setCodeBlock(updatedCodeBlock);
-    //     }
-    //   });
-    // }
+    socket.current = io(`${process.env.REACT_APP_SERVER_URL}`);
     socket.current.on("codeUpdate", (updatedCodeBlock) => {
       if (updatedCodeBlock.id === id) {
         setCodeBlock(updatedCodeBlock);
@@ -93,6 +73,7 @@ function CodeBlock() {
     setOptions: { useWorker: false },
     readOnly: !isStudent,
   };
+
   return (
     <div className="code-block-container">
       <div className="code-block">
@@ -102,14 +83,6 @@ function CodeBlock() {
           </div>
         )}
         <h1 className="code-block-title">{codeBlock.title}</h1>
-        {/* <textarea
-          value={codeBlock.code || ""}
-          onChange={(e) => handleCodeChange(e.target.value)}
-          disabled={!isStudent}
-          className={`code-block-textarea ${
-            !isStudent ? "textarea-disabled" : ""
-          }`}
-        ></textarea> */}
         <div className="ace-editor-wrapper">
           <AceEditor
             style={{ height: "100%", width: "100%" }}
@@ -120,7 +93,7 @@ function CodeBlock() {
         <div className="user-role">
           You are currently viewing as:
           <span className="bold-text">
-            {isStudent ? "Student (edit mode)" : "Mentor (read only mode)"}
+            {isStudent ? " Student (edit mode)" : " Mentor (read only mode)"}
           </span>
         </div>
       </div>

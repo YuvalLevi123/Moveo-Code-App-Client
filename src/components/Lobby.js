@@ -4,32 +4,20 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Alert from "react-bootstrap/Alert";
 import "./Lobby.css";
-
+import { resetDatabase } from "../api/codeBlocksAPI";
 function Lobby({ codeBlocks }) {
   const [showAlert, setShowAlert] = useState(false);
 
   const handleClick = () => {
-    fetch(
-      //"http://localhost:3001/api/reset",
-      `${process.env.REACT_APP_SERVER_URL}/api/reset`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((response) => response.json())
+    resetDatabase()
       .then((data) => {
-        console.log(data);
-        setShowAlert(true); // Show the alert
-        //setTimeout(() => setShowAlert(false), 4000);
+        setShowAlert(true);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
-  console.log(codeBlocks);
+
   return (
     <div className="d-flex justify-content-center align-items-center">
       <div className="text-center">
