@@ -23,6 +23,7 @@ Code-App is a real-time coding platform for collaborative learning and sharing o
 ## Deployment
 
 The client is deployed on Netlify and accessible through the following URL: https://moveo-yuval.netlify.app/
+
 The server is deployed on Herokua.
 
 ## Known Issues & Future Improvements
