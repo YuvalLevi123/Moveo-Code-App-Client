@@ -1,6 +1,5 @@
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 
-// Function to fetch a specific code block by ID
 export async function getCodeBlockById(id) {
   try {
     const response = await fetch(`${serverUrl}/api/codeblocks/${id}`);
@@ -11,7 +10,6 @@ export async function getCodeBlockById(id) {
   }
 }
 
-// Function to update a specific code block by ID
 export async function updateCodeBlockById(id, updatedData) {
   try {
     const response = await fetch(`${serverUrl}/api/codeblocks/${id}`, {
@@ -28,7 +26,6 @@ export async function updateCodeBlockById(id, updatedData) {
   }
 }
 
-// Function to reset the database
 export async function resetDatabase() {
   try {
     const response = await fetch(`${serverUrl}/api/reset`, {
@@ -44,7 +41,6 @@ export async function resetDatabase() {
   }
 }
 
-// Function to fetch all code blocks
 export async function getAllCodeBlocks() {
   try {
     const response = await fetch(`${serverUrl}/api/codeblocks`);

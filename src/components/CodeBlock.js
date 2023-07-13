@@ -17,13 +17,11 @@ function CodeBlock() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Using getCodeBlockById to fetch the code block by ID
         const data = await getCodeBlockById(id);
         setCodeBlock(data);
         setIsStudent(data.currentVisitors > 0);
         const updatedData = { ...codeBlock, currentVisitors: 1 };
 
-        // Using updateCodeBlockById to update the code block by ID
         const updatedBlock = await updateCodeBlockById(id, updatedData);
         console.log("Data updated successfully:", updatedBlock);
       } catch (error) {
