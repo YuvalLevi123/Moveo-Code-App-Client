@@ -30,7 +30,6 @@ function Lobby({ codeBlocks }) {
           >
             <Alert.Heading>Well done!</Alert.Heading>
             <p>You successfully reset the Database</p>
-            {/* <Alert.Link href="#">this important alert message</Alert.Link>. */}
           </Alert>
         )}
         {codeBlocks.map((block) => (

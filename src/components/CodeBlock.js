@@ -13,7 +13,6 @@ function CodeBlock() {
   const [isSolved, setIsSolved] = useState(false);
   const socket = useRef();
   const [isStudent, setIsStudent] = useState(false);
-  //const isStudent = codeBlock.currentVisitors > 0 ? true : false;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,6 +22,7 @@ function CodeBlock() {
         setCodeBlock(data);
         setIsStudent(data.currentVisitors > 0);
         const updatedData = { ...codeBlock, currentVisitors: 1 };
+
         // Using updateCodeBlockById to update the code block by ID
         const updatedBlock = await updateCodeBlockById(id, updatedData);
         console.log("Data updated successfully:", updatedBlock);
@@ -46,7 +46,7 @@ function CodeBlock() {
     return () => {
       socket.current.disconnect();
     };
-  }, []); // Dependency array added
+  }, []);
 
   const handleCodeChange = (updatedCode) => {
     const updatedCodeBlock = { ...codeBlock, code: updatedCode };
